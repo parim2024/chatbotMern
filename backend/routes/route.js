@@ -1,7 +1,5 @@
 import express from 'express';
-//import passport from 'passport';
 import '../config/passportConfig.js';
-//import multer from 'multer';
 import cors from 'cors';
 
 // Controllers
@@ -38,7 +36,7 @@ const router = express.Router();
 router.use(cors());
 
 // ---------- USER ROUTES ----------
-router.post('/signup', upload.single('profilePicture'), userSignup);
+router.post('/signup', userSignup);
 router.post('/login', userLogin);
 router.get('/users', getUsers);
 router.get('/:username/getuserdetails', getUserDetails);
@@ -49,12 +47,14 @@ router.patch('/:username/update-user', updateUser);
 router.get('/anonymousPosts', getAnonymousPosts);
 router.post('/createAnonymousPosts', createAnonymousPost);
 
+
 // ---------- JOURNAL ROUTES ----------
-router.post('/:username', upload1.single('coverPicture'), create_journal);
-router.get('/:username/journals', getPostsByUsername);
-router.get('/:username/:id', getJournalById);
-router.put('/journals/:username/:id', update_journal);
-router.delete('/journal-delete/:username/:id', delete_journal);
+router.post('/journal/:username', create_journal);
+router.get('/journal/:username/journals', getPostsByUsername);
+router.get('/journal/:username/:id', getJournalById);
+router.put('/journal/:username/:id', update_journal);
+router.delete('/journal/:username/:id', delete_journal);
+
 
 // ---------- MOOD ROUTES ----------
 router.get('/api/moods/:username', getMoods);

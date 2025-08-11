@@ -1,4 +1,4 @@
-import User from "../models/userModel.js";
+//import User from "../models/userModel.js";
 import Anonymous from "../models/anonymousSchema.js";
 
 export const getAnonymousPosts = async (req, res) => {

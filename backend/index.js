@@ -1,108 +1,58 @@
-
-/*
-import http from 'http';
-import { Server } from 'socket.io';
 import dotenv from 'dotenv';
 dotenv.config();
+
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
+import morgan from 'morgan';
+import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
-import session from 'express-session';
-import passport from 'passport';
-import userRoutes from './routes/route.js';
-import Connection from './database/db.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import bodyParser from 'body-parser';
-
-
-mongoose.set('strictQuery', true);
-
-const app = express();
-const server = http.createServer(app); // Create HTTP server
-
-
-app.use(express.json());
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
-  credentials: true,
-
-}));
-app.use(cookieParser());
-app.use (bodyParser.json ({extended: true}));
-app.use (bodyParser.urlencoded({extended: true}));
-
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/upload1', express.static(path.join(__dirname, 'upload1')));
-
-Connection();
-app.use('/', userRoutes);
-
-const port = process.env.PORT || 4000;
-
-server.listen(port, () => {
-  console.log("Server is running on port", port);
-});
-
-*/
-import http from 'http';
-import express from 'express';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import cookieParser from 'cookie-parser';
-import session from 'express-session';
-import passport from 'passport';
-import userRoutes from './routes/route.js';
 import Connection from './database/db.js';
 
-dotenv.config();
-mongoose.set('strictQuery', true);
+// Import routes
+import router from './routes/user-routes.js';
+import journalRouter from './routes/journal-routes.js';
+import anonymousRouter from './routes/anonymous-routes.js';
+import moodRouter from './routes/mood-routes.js';
 
 const app = express();
-const server = http.createServer(app);
 
-// Middlewares
-app.use(express.json());
+// Middleware
 app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
-  credentials: true,
+    credentials: true,
+    origin: process.env.FRONTEND_URL
 }));
+app.use(express.json());
 app.use(cookieParser());
-
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
+app.use(morgan('dev'));
+app.use(helmet({
+    crossOriginResourcePolicy: false
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+const PORT = process.env.PORT || 8080;
 
-// MongoDB Connection
-Connection();
-
-// Routes
-app.use('/', userRoutes);
-
-// Start Server
-const port = process.env.PORT || 4000;
-server.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+// Default route
+app.get("/", (req, res) => {
+    res.json({
+        message: `Server is running on port ${PORT}`
+    });
 });
 
-//for testing purose
+// Mount routes
+app.use('/api/v1/user', router);
+app.use('/api/v1/journal', journalRouter);
+app.use('/api/v1/anonymous', anonymousRouter);
+app.use('/api/v1/moods', moodRouter);
+
+// Start server
+const startServer = async () => {
+    try {
+        await Connection();
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    } catch (err) {
+        console.error("Database connection failed:", err);
+    }
+};
+
+startServer();

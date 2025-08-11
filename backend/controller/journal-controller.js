@@ -1,6 +1,6 @@
 import Journal from "../models/journalModel.js";
 import User from "../models/userModel.js";
-import jwt from 'jsonwebtoken';
+//import jwt from 'jsonwebtoken';
 import mongoose from "mongoose";
 
 export const create_journal = async (req, res) => {

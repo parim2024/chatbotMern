@@ -1,11 +1,6 @@
-import User from '../models/userModel.js';
-import Journal from '../models/journalModel.js';
-//import jwt from 'jsonwebtoken';
-//import passport from 'passport';
-import bcrypt from 'bcryptjs';
-
-import bcrypt from "bcryptjs";
+import Journal from "../models/journalModel.js";
 import User from "../models/userModel.js";
+import bcrypt from 'bcryptjs';
 
 
 // User Signup
@@ -34,16 +29,12 @@ export const userSignup = async (req, res) => {
 export const userLogin = async (req, res) => {
   try {
     const { username, password } = req.body;
-
-    // Find user by username
     const user = await User.findOne({ username });
 
-    // Check if user exists and if the password is correct
-    if (!user || !bcrypt.compareSync(password, user.password)) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
 
-    // Return user details and token
     return res.status(200).json({ user });
   } catch (error) {
     return res.status(500).json({ error: error.message });

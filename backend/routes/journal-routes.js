@@ -19,7 +19,7 @@ journalRouter.get('/:username/journals', getPostsByUsername);
 journalRouter.get('/:username/:id', getJournalById);
 
 // Update a specific journal entry
-journalRouter.put('/:username/:id', update_journal);
+journalRouter.put('/:username/:id', update_journal);  //yha journal ki id aayegi, user ki nahi
 
 // Delete a specific journal entry
 journalRouter.delete('/:username/:id', delete_journal);

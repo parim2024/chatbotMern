@@ -6,12 +6,9 @@ import mongoose from "mongoose";
 export const create_journal = async (req, res) => {
     const { title, article, tags } = req.body;
     const { username } = req.params;
-    console.log(username);
-    console.log(req.body);
 
     try {
         const user = await User.findOne({ username });
-        console.log(user);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -19,12 +16,8 @@ export const create_journal = async (req, res) => {
         const journalData = {
             title,
             article,
-            tags,
+            tags
         };
-
-        if (req.file) {
-            journalData.coverPicture = req.file.path; // save the file path to the journal document
-        }
 
         const journalAdded = await Journal.create(journalData);
 
@@ -37,6 +30,7 @@ export const create_journal = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
 
 // read all your journals only your journals 
 export const getPostsByUsername = async (req, res) => {

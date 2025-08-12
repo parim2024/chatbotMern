@@ -7,18 +7,19 @@ import bcrypt from 'bcryptjs';
 // User Signup
 export const userSignup = async (req, res) => {
   try {
-      let exist = await User.findOne({ $or: [{ username: req.body.username }, { email: req.body.email }] });
-      if (exist) {
-          return res.status(409).json({ msg: 'Username or email already exists!' });
-      }
-      const newUser = new User(req.body);
-      if (req.file) {
-          newUser.profilePicture = req.file.path; // save the file path to the user document
-      }
-      await newUser.save();
-      return res.status(200).json(newUser);
+    let exist = await User.findOne({
+      $or: [{ username: req.body.username }, { email: req.body.email }]
+    });
+    if (exist) {
+      return res.status(409).json({ msg: 'Username or email already exists!' });
+    }
+
+    const newUser = new User(req.body); // no file handling here
+    await newUser.save();
+
+    return res.status(200).json(newUser);
   } catch (error) {
-      return res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };
 
@@ -40,6 +41,7 @@ export const userLogin = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
 
 // Get All Users
 export const getUsers = async (req, res) => {
@@ -80,8 +82,8 @@ export const updateUser = async (req, res) => {
     if (!req.body || Object.keys(req.body).length === 0) {
       return res.status(400).json({ msg: 'No data provided to update!' });
     }
+const allowedUpdates = ['name', 'email', 'bio', 'password', 'age', 'gender'];
 
-    const allowedUpdates = ['name', 'email', 'bio', 'password', 'age', 'gender', 'profilePicture'];
     const updates = Object.keys(req.body);
     const isValidUpdate = updates.every(update => allowedUpdates.includes(update));
 

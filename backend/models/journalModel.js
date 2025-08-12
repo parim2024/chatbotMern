@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-
 const journalSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -9,10 +8,6 @@ const journalSchema = new mongoose.Schema({
     article: {
         type: String,
         required: true
-    }, 
-    coverPicture: {
-        type: String, // This will store the file path
-        default: ''
     },
     tags: [{
         type: String
@@ -20,7 +15,5 @@ const journalSchema = new mongoose.Schema({
 },
 { timestamps: true });
 
-
-const Journal = mongoose.model('Journal', journalSchema)
+const Journal = mongoose.model('Journal', journalSchema);
 export default Journal;
-

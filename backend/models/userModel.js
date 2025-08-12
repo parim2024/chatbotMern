@@ -35,10 +35,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  profilePicture: {
-    type: String, // This will store the file path
-    default: ''
-  },
   journals: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Journal'

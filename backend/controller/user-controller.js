@@ -82,7 +82,8 @@ export const updateUser = async (req, res) => {
     if (!req.body || Object.keys(req.body).length === 0) {
       return res.status(400).json({ msg: 'No data provided to update!' });
     }
-const allowedUpdates = ['name', 'email', 'bio', 'password', 'age', 'gender'];
+
+    const allowedUpdates = ['name', 'email', 'bio', 'password', 'age', 'gender'];
 
     const updates = Object.keys(req.body);
     const isValidUpdate = updates.every(update => allowedUpdates.includes(update));

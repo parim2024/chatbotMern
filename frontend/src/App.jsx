@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+/*import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Signup from './components/SignupIn/Signup';
 import Login from './components/login/Login';
@@ -11,6 +11,45 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/unauthorizedAccess" element={<NoAccess />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+*/
+
+import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
+import Home from './components/home/Home';
+import Signup from './components/SignupIn/Signup';
+import Login from './components/login/Login';
+import NoAccess from './components/noAccess/NoAccess';
+import MoodTrack from './components/moodtrack/MoodTrack.jsx';
+
+
+const PrivateRoute = ({ children }) => {
+  const { username: usernameFromUrl } = useParams();
+  const token = localStorage.getItem('token');
+  const usernameFromStorage = localStorage.getItem('tokenUser');
+
+  if (!token || usernameFromUrl !== usernameFromStorage) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('tokenUser');
+    return <Navigate to="/unauthorizedAccess" />;
+  }
+
+  return children;
+};
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/unauthorizedAccess" element={<NoAccess />} />
+        <Route path="/:username/mood" element={<PrivateRoute><MoodTrack /></PrivateRoute>} />
       </Routes>
     </BrowserRouter>
   );

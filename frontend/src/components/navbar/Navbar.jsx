@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 //import Loader from "react-js-loader";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false); 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-  const user = localStorage.getItem('tokenUser');
+  const user = localStorage.getItem("tokenUser");
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    
+    const token = localStorage.getItem("token");
+
     if (token) {
       setIsLoggedIn(true);
     }
@@ -30,12 +30,12 @@ const Navbar = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      localStorage.removeItem('token');
-      localStorage.removeItem('tokenUser');
+      localStorage.removeItem("token");
+      localStorage.removeItem("tokenUser");
       setIsLoggedIn(false);
-      navigate('/login');
+      navigate("/login");
     } catch (err) {
-      console.error('Error logging out:', err);
+      console.error("Error logging out:", err);
     }
   };
   const handleDelete = () => {
@@ -43,32 +43,37 @@ const Navbar = () => {
     setShowDeleteModal(true);
   };
 
- const confirmDelete = async () => {
-  try {
-    const response = await fetch(`http://localhost:8080/api/v1/user/${user}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+  const confirmDelete = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/user/${user}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    const data = await response.json(); // backend ka JSON response parse karo
-    console.log("Delete response:", data);
+      const data = await response.json(); // backend ka JSON response parse karo
+      console.log("Delete response:", data);
 
-    if (response.ok) {
-      // Agar delete successful hai toh logout karo
-      localStorage.removeItem('token');
-      localStorage.removeItem('tokenUser');
-      setIsLoggedIn(false);
-      navigate('/login');
-    } else {
-      console.error("Failed to delete user:", data.message || "Unknown error");
+      if (response.ok) {
+        // Agar delete successful hai toh logout karo
+        localStorage.removeItem("token");
+        localStorage.removeItem("tokenUser");
+        setIsLoggedIn(false);
+        navigate("/login");
+      } else {
+        console.error(
+          "Failed to delete user:",
+          data.message || "Unknown error"
+        );
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
     }
-  } catch (error) {
-    console.error('Error deleting user:', error);
-  }
-};
-
+  };
 
   const closeModal = () => {
     // Close the delete modal
@@ -76,16 +81,23 @@ const Navbar = () => {
   };
 
   return (
-    
     <div className="bg-white w-full z-50 shadow-lg">
       <header className="absolute inset-x-0 top-0 z-50">
-        <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-          <div className="flex lg:flex-1">
-            <a href="/" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img className="h-8 w-auto" src="https://static.thenounproject.com/png/66159-200.png" alt="Your Company" />
-           </a>
+        <nav
+          className="flex items-center justify-between p-6 lg:px-8"
+          aria-label="Global"
+        >
+          <div className="flex lg:flex-1 items-center">
+            <a href="/" className="flex items-center gap-2 p-1.5">
+              <img
+                className="h-8 w-auto"
+                src="https://static.thenounproject.com/png/66159-200.png"
+                alt="MindSpace Logo"
+              />
+              <span className="text-xl font-bold text-gray-800">MindSpace</span>
+            </a>
           </div>
+
           <div className="flex lg:hidden">
             <button
               type="button"
@@ -93,18 +105,48 @@ const Navbar = () => {
               onClick={toggleMobileMenu}
             >
               <span className="sr-only">Open main menu</span>
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                />
               </svg>
             </button>
           </div>
- <div className="hidden lg:flex lg:gap-x-12">
-  <a href={`/${user}/mood`} className="text-sm font-semibold leading-6 text-gray-900">Mood Tracking</a>
-  <a href={`/${user}/therapist`} className="text-sm font-semibold leading-6 text-gray-900">AI Therapist</a>
-  <a href={`/${user}/anonymoussharing`} className="text-sm font-semibold leading-6 text-gray-900">Anonymous Sharing</a>
-  <a href={`/${user}/nearbytherapists`} className="text-sm font-semibold leading-6 text-gray-900">Nearby Therapists</a>
-</div>
-
+          <div className="hidden lg:flex lg:gap-x-12">
+            <a
+              href={`/${user}/mood`}
+              className="text-sm font-semibold leading-6 text-gray-900"
+            >
+              Mood Tracking
+            </a>
+            <a
+              href={`/${user}/therapist`}
+              className="text-sm font-semibold leading-6 text-gray-900"
+            >
+              AI Therapist
+            </a>
+            <a
+              href={`/${user}/anonymoussharing`}
+              className="text-sm font-semibold leading-6 text-gray-900"
+            >
+              Anonymous Sharing
+            </a>
+            <a
+              href={`/${user}/nearbytherapists`}
+              className="text-sm font-semibold leading-6 text-gray-900"
+            >
+              Nearby Therapists
+            </a>
+          </div>
 
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             {isLoggedIn ? (
@@ -120,19 +162,58 @@ const Navbar = () => {
                   >
                     <span className="absolute -inset-1.5"></span>
                     <span className="sr-only">Open user menu</span>
-                    <img className="h-8 w-8 rounded-full" src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.2082370165.1716336000&semt=ais_user" alt="Profile" />
+                    <img
+                      className="h-8 w-8 rounded-full"
+                      src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.2082370165.1716336000&semt=ais_user"
+                      alt="Profile"
+                    />
                   </button>
                 </div>
                 {dropdownOpen && (
-                  <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabIndex="-1">
-                    <a href={`/${user}/profile`} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0">Your Profile</a>
-                    <a onClick={(e) => handleLogout(e)} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Sign out</a>
-                    <a onClick={handleDelete} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Delete Profile</a>
+                  <div
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="user-menu-button"
+                    tabIndex="-1"
+                  >
+                    <a
+                      href={`/${user}/profile`}
+                      className="block px-4 py-2 text-sm text-gray-700"
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="user-menu-item-0"
+                    >
+                      Your Profile
+                    </a>
+                    <a
+                      onClick={(e) => handleLogout(e)}
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700"
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="user-menu-item-2"
+                    >
+                      Sign out
+                    </a>
+                    <a
+                      onClick={handleDelete}
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700"
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="user-menu-item-2"
+                    >
+                      Delete Profile
+                    </a>
                   </div>
                 )}
               </div>
             ) : (
-              <a href="/login" className="text-sm font-semibold leading-6 text-gray-900">
+              <a
+                href="/login"
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
                 Login <span aria-hidden="true">→</span>
               </a>
             )}
@@ -145,7 +226,11 @@ const Navbar = () => {
               <div className="flex items-center justify-between">
                 <a href="#" className="-m-1.5 p-1.5">
                   <span className="sr-only">Your Company</span>
-                  <img className="h-8 w-auto" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQZrRgwuKA5JrFS4glBVgzvmPDhhPjWrObr-D01xeKZQ&s" alt="Your Company" />
+                  <img
+                    className="h-8 w-auto"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQZrRgwuKA5JrFS4glBVgzvmPDhhPjWrObr-D01xeKZQ&s"
+                    alt="Your Company"
+                  />
                 </a>
                 <button
                   type="button"
@@ -153,19 +238,50 @@ const Navbar = () => {
                   onClick={toggleMobileMenu}
                 >
                   <span className="sr-only">Close menu</span>
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
               <div className="mt-6 flow-root">
                 <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="space-y-2 py-6">
-  <a href={`/${user}/mood`} className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Mood Tracking</a>
-  <a href={`/${user}/therapist`} className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">AI Therapist</a>
-  <a href={`/${user}/anonymoussharing`} className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Anonymous Sharing</a>
-  <a href={`/${user}/nearbytherapists`} className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Nearby Therapists</a>
-</div>
+                  <div className="space-y-2 py-6">
+                    <a
+                      href={`/${user}/mood`}
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >
+                      Mood Tracking
+                    </a>
+                    <a
+                      href={`/${user}/therapist`}
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >
+                      AI Therapist
+                    </a>
+                    <a
+                      href={`/${user}/anonymoussharing`}
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >
+                      Anonymous Sharing
+                    </a>
+                    <a
+                      href={`/${user}/nearbytherapists`}
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >
+                      Nearby Therapists
+                    </a>
+                  </div>
 
                   <div className="py-6">
                     {isLoggedIn ? (
@@ -180,18 +296,57 @@ const Navbar = () => {
                         >
                           <span className="absolute -inset-1.5"></span>
                           <span className="sr-only">Open user menu</span>
-                          <img className="h-8 w-8 rounded-full" src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.2082370165.1716336000&semt=ais_user" alt="Profile" />
+                          <img
+                            className="h-8 w-8 rounded-full"
+                            src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?size=338&ext=jpg&ga=GA1.1.2082370165.1716336000&semt=ais_user"
+                            alt="Profile"
+                          />
                         </button>
                         {dropdownOpen && (
-                          <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button-mobile" tabIndex="-1">
-                            <a href={`/${user}/profile`} className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-0-mobile">Your Profile</a>
-                            <a onClick={(e) => handleLogout(e)} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Sign out</a>
-                    <a onClick={handleDelete} href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="user-menu-item-2">Delete Profile</a>
+                          <div
+                            className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                            role="menu"
+                            aria-orientation="vertical"
+                            aria-labelledby="user-menu-button-mobile"
+                            tabIndex="-1"
+                          >
+                            <a
+                              href={`/${user}/profile`}
+                              className="block px-4 py-2 text-sm text-gray-700"
+                              role="menuitem"
+                              tabIndex="-1"
+                              id="user-menu-item-0-mobile"
+                            >
+                              Your Profile
+                            </a>
+                            <a
+                              onClick={(e) => handleLogout(e)}
+                              href="#"
+                              className="block px-4 py-2 text-sm text-gray-700"
+                              role="menuitem"
+                              tabIndex="-1"
+                              id="user-menu-item-2"
+                            >
+                              Sign out
+                            </a>
+                            <a
+                              onClick={handleDelete}
+                              href="#"
+                              className="block px-4 py-2 text-sm text-gray-700"
+                              role="menuitem"
+                              tabIndex="-1"
+                              id="user-menu-item-2"
+                            >
+                              Delete Profile
+                            </a>
                           </div>
                         )}
                       </div>
                     ) : (
-                      <a href="/login" className="text-sm font-semibold leading-6 text-gray-900">
+                      <a
+                        href="/login"
+                        className="text-sm font-semibold leading-6 text-gray-900"
+                      >
                         Login <span aria-hidden="true">→</span>
                       </a>
                     )}
@@ -204,32 +359,62 @@ const Navbar = () => {
       </header>
       {/* Delete Profile Modal */}
       {showDeleteModal && (
-        <div className="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div
+          className="fixed z-10 inset-0 overflow-y-auto"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
           <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <div
+              className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+              aria-hidden="true"
+            ></div>
 
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <span
+              className="hidden sm:inline-block sm:align-middle sm:h-screen"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
 
-            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div
+              className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-title"
+            >
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                    <h3
+                      className="text-lg leading-6 font-medium text-gray-900"
+                      id="modal-title"
+                    >
                       Delete Profile
                     </h3>
                     <div className="mt-2">
                       <p className="text-sm text-gray-500">
-                        Are you sure you want to delete your profile? This action cannot be undone.
+                        Are you sure you want to delete your profile? This
+                        action cannot be undone.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button onClick={confirmDelete} type="button" className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                <button
+                  onClick={confirmDelete}
+                  type="button"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
+                >
                   Delete
                 </button>
-                <button onClick={closeModal} type="button" className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                <button
+                  onClick={closeModal}
+                  type="button"
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                >
                   Cancel
                 </button>
               </div>
@@ -238,7 +423,6 @@ const Navbar = () => {
         </div>
       )}
     </div>
-
   );
 };
 

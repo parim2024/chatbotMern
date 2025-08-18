@@ -19,7 +19,7 @@ const AnonymousPost = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:8000/createAnonymousPosts', {
+      const response = await fetch('http://localhost:8080/api/v1/anonymous/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ const AnonymousPost = () => {
         setTitle('');
         setArticle('');
         setTags('');
-        navigate(`/${user}/anonymoussharing`);
+       navigate(`/${user}/allanonymousposts`);
       } else {
         console.error('Failed to create post');
       }

@@ -25,6 +25,9 @@ import Signup from './components/SignupIn/Signup';
 import Login from './components/login/Login';
 import NoAccess from './components/noAccess/NoAccess';
 import MoodTrack from './components/moodtrack/MoodTrack.jsx';
+import AnonymousSharing from './components/anonymous/AnonymousSharing';
+import AnonymousPost from './components/anonymous/AnonymousPost';
+import AllAnonymousPost from './components/anonymous/AllAnonymousPost';
 
 
 const PrivateRoute = ({ children }) => {
@@ -50,6 +53,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/unauthorizedAccess" element={<NoAccess />} />
         <Route path="/:username/mood" element={<PrivateRoute><MoodTrack /></PrivateRoute>} />
+        <Route path="/:username/anonymoussharing" element={<PrivateRoute><AnonymousSharing /></PrivateRoute>} />
+        <Route path="/:username/createanonymouspost" element={<PrivateRoute><AnonymousPost /></PrivateRoute>} />
+        <Route path="/:username/allanonymousposts" element={<PrivateRoute><AllAnonymousPost /></PrivateRoute>} />
       </Routes>
     </BrowserRouter>
   );

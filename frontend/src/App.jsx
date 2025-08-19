@@ -28,6 +28,7 @@ import MoodTrack from './components/moodtrack/MoodTrack.jsx';
 import AnonymousSharing from './components/anonymous/AnonymousSharing';
 import AnonymousPost from './components/anonymous/AnonymousPost';
 import AllAnonymousPost from './components/anonymous/AllAnonymousPost';
+import Therapist from './components/AITherapist/Therapist.jsx';
 
 
 const PrivateRoute = ({ children }) => {
@@ -56,6 +57,8 @@ function App() {
         <Route path="/:username/anonymoussharing" element={<PrivateRoute><AnonymousSharing /></PrivateRoute>} />
         <Route path="/:username/createanonymouspost" element={<PrivateRoute><AnonymousPost /></PrivateRoute>} />
         <Route path="/:username/allanonymousposts" element={<PrivateRoute><AllAnonymousPost /></PrivateRoute>} />
+
+        <Route path="/:username/therapist" element={<PrivateRoute><Therapist /></PrivateRoute>} />
       </Routes>
     </BrowserRouter>
   );

@@ -13,6 +13,7 @@ import router from './routes/user-routes.js';
 import journalRouter from './routes/journal-routes.js';
 import anonymousRouter from './routes/anonymous-routes.js';
 import moodRouter from './routes/mood-routes.js';
+import chatRouter from "./routes/chatRoutes.js";
 
 const app = express();
 
@@ -43,6 +44,8 @@ app.use('/api/v1/user', router);
 app.use('/api/v1/journal', journalRouter);
 app.use('/api/v1/anonymous', anonymousRouter);
 app.use('/api/v1/moods', moodRouter);
+app.use("/api/v1/chat", chatRouter);
+
 
 // Start server
 const startServer = async () => {

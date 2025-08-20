@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Navbar from "../navbar/Navbar"; // make sure the path is correct
 
 export default function Chat() {
   const [prompt, setPrompt] = useState("");
@@ -29,19 +30,12 @@ export default function Chat() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* ✅ Simple Navbar */}
-      <header className="bg-white shadow-md py-4 px-6 flex">
-         <img
-                className="h-8 w-auto"
-                src="https://static.thenounproject.com/png/66159-200.png"
-                alt="MindSpace Logo"
-              />
-        <h1 className="text-2xl font-bold  text-gray-800">MindSpace</h1>
-      </header>
+    <div className="min-h-screen bg-blue-50 flex flex-col">
+      {/* ✅ Navbar */}
+      <Navbar />
 
-      {/* 🌟 Chat Section */}
-      <div className="flex flex-col flex-grow items-center justify-center px-4 py-10">
+      {/* Spacer to prevent content clash if Navbar is fixed */}
+      <div className="mt-24 flex flex-col items-center px-4 py-10 flex-grow">
         <div className="w-full max-w-2xl bg-white shadow-lg rounded-2xl p-6">
           <h2 className="text-xl font-semibold text-center mb-4 text-gray-700">
             Talk with Gemini 🤖

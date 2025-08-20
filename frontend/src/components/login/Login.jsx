@@ -11,12 +11,15 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-     const response = await axios.post('http://localhost:8080/api/v1/user/login', { username, password });
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/user/login",
+        { username, password }
+      );
       console.log(response);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("tokenUser", response.data.user.username);
       navigate(`/`);
-    } catch(err) {
+    } catch (err) {
       setError("Invalid username or password");
       console.log(err);
     }
@@ -27,12 +30,12 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black px-6 py-12">
       {/* Error Modal */}
       {error && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div
-            className="fixed inset-0 bg-gray-500 bg-opacity-75"
+            className="fixed inset-0 bg-black bg-opacity-40"
             aria-hidden="true"
           ></div>
           <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
@@ -53,9 +56,7 @@ const Login = () => {
                   </svg>
                 </div>
                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    Error
-                  </h3>
+                  <h3 className="text-lg font-medium text-gray-900">Error</h3>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">{error}</p>
                   </div>
@@ -76,95 +77,91 @@ const Login = () => {
       )}
 
       {/* Login Form */}
-      <div className="w-screen mt-32">
-        <div className="max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-md">
-          <div className="px-6 py-4 bg-gradient-to-r from-gray-300 via-gray-200 to-gray-100">
-            <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
-              Sign in to your account
-            </h2>
-            <form onSubmit={handleSubmit}>
-              {/* Username */}
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="username"
-                >
-                  Username
-                </label>
-                <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="username"
-                  type="text"
-                  placeholder="Enter username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  autoComplete="username"
-                  required
-                />
-              </div>
-
-              {/* Password */}
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="password"
-                >
-                  Password
-                </label>
-                <input
-                  className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="password"
-                  type="password"
-                  placeholder="Enter password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="current-password"
-                  required
-                />
-              </div>
-
-              {/* Buttons */}
-              <div className="flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setUsername("");
-                    setPassword("");
-                  }}
-                  className="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  Sign in
-                </button>
-              </div>
-            </form>
-
-            {/* Links */}
-            <p className="mt-10 text-center text-sm text-gray-500">
-              Not a member?{" "}
-              <Link
-                to="/signup"
-                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-              >
-                Signup Now
-              </Link>
-            </p>
-            <p className="text-center text-sm text-gray-500">
-              Go back to Homepage?{" "}
-              <Link
-                to="/"
-                className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-              >
-                Go back
-              </Link>
-            </p>
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+        <h2 className="text-3xl font-extrabold text-center mb-6 text-blue-700">
+          Sign in to your account
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Username */}
+          <div>
+            <label
+              htmlFor="username"
+              className="block text-sm font-semibold text-gray-700 mb-2"
+            >
+              Username
+            </label>
+            <input
+              id="username"
+              type="text"
+              placeholder="Enter username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              autoComplete="username"
+              required
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
           </div>
-        </div>
+
+          {/* Password */}
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-semibold text-gray-700 mb-2"
+            >
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+              required
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
+
+          {/* Buttons */}
+          <div className="flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => {
+                setUsername("");
+                setPassword("");
+              }}
+              className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition"
+            >
+              Sign in
+            </button>
+          </div>
+        </form>
+
+        {/* Links */}
+        <p className="mt-6 text-center text-gray-600 text-sm">
+          Not a member?{" "}
+          <Link
+            to="/signup"
+            className="text-blue-500 font-semibold hover:underline"
+          >
+            Signup Now
+          </Link>
+        </p>
+        <p className="text-center text-gray-600 text-sm">
+          Go back to Homepage?{" "}
+          <Link
+            to="/"
+            className="text-blue-500 font-semibold hover:underline"
+          >
+            Go back
+          </Link>
+        </p>
       </div>
     </div>
   );

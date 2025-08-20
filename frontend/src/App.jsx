@@ -29,6 +29,8 @@ import AnonymousSharing from './components/anonymous/AnonymousSharing';
 import AnonymousPost from './components/anonymous/AnonymousPost';
 import AllAnonymousPost from './components/anonymous/AllAnonymousPost';
 import Therapist from './components/AITherapist/Therapist.jsx';
+import OnlineTherapists from './components/OnlineTherapists/OnlineTherapists.jsx';
+
 
 
 const PrivateRoute = ({ children }) => {
@@ -59,6 +61,8 @@ function App() {
         <Route path="/:username/allanonymousposts" element={<PrivateRoute><AllAnonymousPost /></PrivateRoute>} />
 
         <Route path="/:username/therapist" element={<PrivateRoute><Therapist /></PrivateRoute>} />
+        <Route path="/online-therapists" element={<OnlineTherapists />} />
+
       </Routes>
     </BrowserRouter>
   );

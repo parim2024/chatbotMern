@@ -10,18 +10,16 @@ const AnonymousSharing = () => {
   return (
     <>
       <Navbar />
-      <div className="relative h-screen flex items-center justify-center mt-16">
-        {/* Background Image */}
-      
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/60"></div>
+      <div className="relative h-screen flex items-center justify-center mt-24">
+        {/* Background */}
+        <div className="absolute inset-0 bg-blue-80"></div> {/* Darker background */}
 
         {/* Content */}
         <div className="relative z-10 text-center px-6 max-w-3xl">
-          <h2 className="text-5xl font-extrabold text-white drop-shadow-lg">
+          <h2 className="text-4xl font-extrabold text-gray drop-shadow-lg">
             Anonymous Sharing
           </h2>
-          <p className="mt-6 text-lg text-gray-200 leading-relaxed">
+          <p className="mt-6 text-lg text-black leading-relaxed">
             Welcome to the Anonymous Sharing Portal, a safe haven where you can express yourself freely without the fear of being judged. 
             <br />
             Share your thoughts, feelings, and experiences openly, knowing that your identity remains confidential.

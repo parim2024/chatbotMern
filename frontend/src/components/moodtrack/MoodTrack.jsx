@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Dialog, Transition } from '@headlessui/react';
@@ -19,7 +20,7 @@ const MoodTrack = () => {
 
   useEffect(() => {
     // Fetch existing mood data for the user
-    axios.get(`http://localhost:8000/api/moods/${username}`)
+    axios.get(`http://localhost:8080/api/v1/moods/${username}`)
       .then(response => setMoodData(response.data))
       .catch(error => console.error('Error fetching mood data:', error));
   }, [username]);
@@ -31,7 +32,7 @@ const MoodTrack = () => {
 
   const handleMoodSelect = (selectedMood) => {
     setMood(selectedMood);
-    axios.post(`http://localhost:8000/api/moods/${username}`, { date: selectedDate, mood: selectedMood })
+    axios.post(`http://localhost:8080/api/v1/moods/${username}`, { date: selectedDate, mood: selectedMood })
       .then(response => {
         setMoodData(prevData => [...prevData, response.data]);
         setIsModalOpen(false);
@@ -57,7 +58,7 @@ const MoodTrack = () => {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto p-12 mt-20 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 rounded-lg shadow-lg border border-gray-400" style={{ maxWidth: '840px', marginTop: '100px' }}>
+      <div className="container mx-auto p-12 mt-20 bg-gradient-to-r bg-blue-50 rounded-lg shadow-lg border border-gray-400" style={{ maxWidth: '840px', marginTop: '100px' }}>
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
           <div className="text-center">
             <input

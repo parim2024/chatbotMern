@@ -1,6 +1,6 @@
-# MinSpace – Mental Health & Wellness Platform
+# MindSpace – Mental Health & Wellness Platform
 
-MinSpace is a **full-stack MERN application** designed to support mental wellness.  
+MindSpace is a **full-stack MERN application** designed to support mental wellness.  
 It provides a safe online space where users can track their mood, share anonymous posts, and interact with an AI-powered chatbot for emotional support.
 
 ---

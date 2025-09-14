@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 
 import Loader from "react-js-loader";
-import Readjournal from '../journal/Readjournal';
+
 
 const Profile = () => {
   const [userDetails, setUserDetails] = useState(null);
@@ -128,9 +128,6 @@ const Profile = () => {
           </div>
         </section>
 
-        <div className='-mt-20'>
-          <Readjournal />
-        </div>
       </main>
     </>
   );

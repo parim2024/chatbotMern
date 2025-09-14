@@ -46,7 +46,7 @@ const Navbar = () => {
   const confirmDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/user/${user}`,
+         `${import.meta.env.VITE_API_URL}/api/v1/user/${user}`,
         {
           method: "DELETE",
           headers: {

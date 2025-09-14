@@ -18,7 +18,6 @@ function App() {
 
 export default App;
 */
-
 import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import Home from './components/home/Home';
 import Signup from './components/SignupIn/Signup';
@@ -30,8 +29,8 @@ import AnonymousPost from './components/anonymous/AnonymousPost';
 import AllAnonymousPost from './components/anonymous/AllAnonymousPost';
 import Therapist from './components/AITherapist/Therapist.jsx';
 import OnlineTherapists from './components/OnlineTherapists/OnlineTherapists.jsx';
-
-
+import AboutUs from './components/aboutUs/AboutUs';
+import Profile from './components/profile/Profile';  // ✅ Un-comment this
 
 const PrivateRoute = ({ children }) => {
   const { username: usernameFromUrl } = useParams();
@@ -51,18 +50,21 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/unauthorizedAccess" element={<NoAccess />} />
+        <Route path="/online-therapists" element={<OnlineTherapists />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+
+        {/* Private Routes */}
         <Route path="/:username/mood" element={<PrivateRoute><MoodTrack /></PrivateRoute>} />
         <Route path="/:username/anonymoussharing" element={<PrivateRoute><AnonymousSharing /></PrivateRoute>} />
         <Route path="/:username/createanonymouspost" element={<PrivateRoute><AnonymousPost /></PrivateRoute>} />
         <Route path="/:username/allanonymousposts" element={<PrivateRoute><AllAnonymousPost /></PrivateRoute>} />
-
         <Route path="/:username/therapist" element={<PrivateRoute><Therapist /></PrivateRoute>} />
-        <Route path="/online-therapists" element={<OnlineTherapists />} />
-
+        <Route path="/:username/profile" element={<PrivateRoute><Profile /></PrivateRoute>} /> {/* ✅ Profile added */}
       </Routes>
     </BrowserRouter>
   );

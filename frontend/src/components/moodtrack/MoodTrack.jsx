@@ -20,7 +20,7 @@ const MoodTrack = () => {
 
   useEffect(() => {
     // Fetch existing mood data for the user
-    axios.get(`http://localhost:8080/api/v1/moods/${username}`)
+   axios.get(`${import.meta.env.VITE_API_URL}/api/v1/moods/${username}`)
       .then(response => setMoodData(response.data))
       .catch(error => console.error('Error fetching mood data:', error));
   }, [username]);
@@ -32,7 +32,7 @@ const MoodTrack = () => {
 
   const handleMoodSelect = (selectedMood) => {
     setMood(selectedMood);
-    axios.post(`http://localhost:8080/api/v1/moods/${username}`, { date: selectedDate, mood: selectedMood })
+   axios.post(`${import.meta.env.VITE_API_URL}/api/v1/moods/${username}`, { date: selectedDate, mood: selectedMood })
       .then(response => {
         setMoodData(prevData => [...prevData, response.data]);
         setIsModalOpen(false);

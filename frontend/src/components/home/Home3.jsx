@@ -111,9 +111,11 @@ const Home3 = () => {
           </div>
 
           {/* Copyright */}
-          <div className="mt-8 text-center text-sm text-gray-500">
-            © {new Date().getFullYear()} MindSpace. All rights reserved.
-          </div>
+        <div className="mt-8 text-center text-sm text-gray-500">
+  © {new Date().getFullYear()} MindSpace. All rights reserved.
+  <br />
+  <span className="text-gray-700">Made with ❤️ by <span className="font-semibold">Paridhi Mittal</span></span>
+</div>
         </div>
       </footer>
     </div>

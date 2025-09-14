@@ -8,7 +8,7 @@ const AllAnonymousPost = () => {
    useEffect(() => {
     const fetchAnonymousPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/v1/anonymous/");
+          const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/anonymous/`);
         setAnonymousPosts(response.data); // yaha response.data hi aayega
       } catch (error) {
         console.error("Error fetching anonymous posts:", error);
